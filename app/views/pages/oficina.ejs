@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title><%=oficina[0].nome_oficina %></title>
+
+    <!-- LINKS CSS -->
+    <!-- <link rel="stylesheet" href="css/styleavaliacao.css"> -->
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/styleOficina.css">
+    <link rel="stylesheet" href="/css/styleServicos.css">
+    <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+
+    <!-- LINKS PARA O GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- FONTS -->
+    <!-- GOTHIC-A1 -->
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+    <!-- SORA -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Sora:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- FONT AWESOME PARA ÍCONES -->
+    <script src="https://kit.fontawesome.com/84b2985f50.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/script_oficina.js"></script>
+    <script src="/js/script_menu.js"></script>
+    <script src="/js/carousel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <script src="/js/mask.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script>
+        $(window).scroll(function() {
+            var scroll = $(window).scrollTop();
+            if (scroll >= 1040) { // 140 é a distancia que vc rola antes da logo sumir
+                $("#cta_wpp").fadeOut();
+            } else {
+                $("#cta_wpp").fadeIn();
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div id="modal"></div>
+
+    <%- include('../partial/header.ejs') %>
+
+    <main>
+
+        <section id="sec_titulos">
+            <div id="titulos">
+                <% if(oficina[0].foto_perfil_ofc == null) { %>
+                    <div id="foto_oficina">
+                        <img src="/img/foto-padrao-oficina.svg" alt="" class="foto-perfil-oficina">
+                    </div>
+                <% } else { %>
+                    <div id="foto_oficina">
+                        <img src="data:image/gif;base64,<%= oficina[0].foto_perfil_ofc %>" alt="" class="foto-perfil-oficina">
+                    </div>
+                <% } %>
+                <div>
+                    <h1 class="titulo"><%= oficina[0].nome_oficina %></h1>
+                    <h2 class="legenda">Oficina Mecânica</h2>
+                </div>
+            </div>
+        </section>
+
+        <section id="oficinas">
+            <div id="carrossel">
+                <% if(oficina[0].foto1 != null) { %>
+                    <div class="carrossel_oficinas">
+                        <img src="data:image/gif;base64,<%= oficina[0].foto1 %>" alt="imagem da oficina" class="img_ofc">
+                    </div>
+                <% } %>
+                <% if(oficina[0].foto2 != null) { %>
+                    <div class="carrossel_oficinas">
+                        <img src="data:image/gif;base64,<%= oficina[0].foto2 %>" alt="imagem da oficina" class="img_ofc">
+                    </div>
+                <% } %>
+                <% if(oficina[0].foto3 != null) { %>
+                    <div class="carrossel_oficinas">
+                        <img src="data:image/gif;base64,<%= oficina[0].foto3 %>" alt="imagem da oficina" class="img_ofc">
+                    </div>
+                <% } %>
+                <% if(oficina[0].foto4 != null) { %>
+                    <div class="carrossel_oficinas">
+                        <img src="data:image/gif;base64,<%= oficina[0].foto4 %>" alt="imagem da oficina" class="img_ofc">
+                    </div>
+                <% } %>
+                <% if(oficina[0].foto5 != null) { %>
+                    <div class="carrossel_oficinas">
+                        <img src="data:image/gif;base64,<%= oficina[0].foto5 %>" alt="imagem da oficina" class="img_ofc">
+                    </div>
+                <% } %>
+                <% if(oficina[0].foto6 != null) { %>
+                    <div class="carrossel_oficinas">
+                        <img src="data:image/gif;base64,<%= oficina[0].foto6 %>" alt="imagem da oficina" class="img_ofc">
+                    </div>
+                <% } %>
+            </div>
+        </section>
+
+        <section>
+            <div id="infos_oficina">
+
+                <h1 class="titulo">Descrição</h1>
+                <p><%= oficina[0].descricao_ofc %></p>
+
+                <div id="horario">
+                    <img src="/img/relogio_icon_laranja.svg" alt="ícone de relógio">
+                    <span>Aberto:</span> <span><%= oficina[0].horario_funcionamento %></span>
+                </div>
+
+                <div id="telefone-oficina">
+                    <img src="/img/phone_icon-laranja.svg" alt="ícone de telefone">
+                    <span class="phone-mask"><%= oficina[0].telefone %></span>
+                </div>
+
+                <div id="redes_sociais">
+                    <% if(oficina[0].facebook.length > 1) { %>
+                        <a target="_blank" href="<%= oficina[0].facebook %>" class="box_redes-sociais shadow_btn">
+                            <div >
+                                <img src="/img/face_laranja.svg" alt="Logo do facebook">
+                            </div>
+                        </a>
+                    <% } %>
+                    <% if(oficina[0].instagram.length > 1) { %>
+                        <a target="_blank" href="<%= oficina[0].instagram %>" class="box_redes-sociais shadow_btn">
+                            <div >
+                                <img src="/img/insta_laranja.svg" alt="Logo do facebook">
+                            </div>
+                        </a>
+                    <% } %>
+                    <% if(oficina[0].email_oficina.length > 1) { %>
+                        <a href="mailto:<%= oficina[0].email_oficina %>" class="box_redes-sociais shadow_btn">
+                            <div >
+                                <img src="/img/email_laranja.svg" alt="Logo do facebook">
+                            </div>
+                        </a>
+                    <% } %>
+                </div>
+
+                <div id="acoes">
+                    <div>
+                        <img src="/img/favorito_laranja.svg" alt="Ícone de coração">
+                        Adicionar aos favoritos
+                    </div>
+                    <div>
+                        <img src="/img/compartilhar_icon.svg" alt="Ícone de compartilhamento">
+                        Compartihar
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <% if(servicosOfc.length > 0) { %>
+            <hr>
+
+            <section id="servicos">
+                <div id="titulos_servicos">
+                    <div id="titulo_avaliacao">
+                        <h1 class="titulo"> Serviços </h1>
+                        <span class="legenda"> Melhores avaliados </span>
+                    </div>
+    
+                    <button class="shadow_btn"><a href="/servicos/<%= oficina[0].nome_tela %>">Ver mais</a></button>
+                </div>
+                <div id="box_servicos">
+                    <% for(let i = 0; i < servicosOfc.length; i++) { %>
+                        <a href="/servico/<%=servicosOfc[i].id_produto%>">
+                            <div class="melhores-servicos">
+                                <img src="data:image/gif;base64,<%= servicosOfc[i].foto1 %>" alt="Foto do serviço" id="foto-servico">
+                                <h5 class="titulos_servico"><%= servicosOfc[i].nome_produto %></h5>
+                                <p class="desc_servico" id="desc_servico"><%= servicosOfc[i].descricao_prod %></p>
+                                <button class="preco_servico default_btn preco-mask">R$<%= String(servicosOfc[i].valor_produto).replace('.', ',') %></button>
+                                <img src="/img/favorito_icon.svg" alt="Ícone de coração para favoritar serviço" id="favorito">
+                            </div>
+                        </a>
+                    <% } %>
+                </div>
+            </section>
+        <% } %>
+
+        <% if(produtosOfc.length > 0) { %>
+            <hr>
+
+            <section id="produtos">
+                <div id="titulos_produtos">
+                    <div id="titulo_avaliacao">
+                        <h1 class="titulo"> Produtos </h1>
+                        <span class="legenda"> Mais vendidos </span>
+                    </div>
+    
+                    <button class="shadow_btn" id="ver_mais-produtos"><a href="/produtos/<%= oficina[0].nome_tela %>">Ver mais</a></button>
+                </div>
+                <div class="produtos_destaque">
+                    <% for(let i = 0; i < produtosOfc.length; i++) { %>
+                        <a href="/produto/<%=produtosOfc[i].id_produto%>">
+                            <div class="produto">
+                                <div class="content_produtos">
+                                    <img src="data:image/gif;base64,<%= produtosOfc[i].foto1 %>" alt="Imagem do produto" class="foto-carousel">
+                                    <h5 class="titulo_produto"><%= produtosOfc[i].nome_produto %></h5>
+                                    <span class="preco_produto">R$<%= String(produtosOfc[i].valor_produto).replace('.', ',') %></span>
+                                    <div id="avaliacao_produto">
+                                        <ul class="avaliacao_produtos">
+                                            <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt="">
+                                            </li>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                            <li class="star-icon_produtos" data-avaliacao="3"><img src="/img/star.svg" alt=""></li>
+                                            <li class="star-icon_produtos" data-avaliacao="4"><img src="/img/star.svg" alt=""></li>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt="">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    <% } %>
+                </div>
+            </section>
+        <% } %>
+
+        <hr>
+
+        <section id="localizacao">
+            <h1 class="titulo">Localização</h1>
+            <address>
+                <span><%= oficina[0].rua %>, <%= oficina[0].numero_ofc %> - <%= oficina[0].bairro %>, <%= oficina[0].cidade %> - <%= oficina[0].uf %>, <span id="cep"><%= oficina[0].cep %></span></span>
+            </address>
+            <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7317.025657446805!2d-46.90821322398491!3d-23.514050700867674!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cf03f0558a60cd%3A0xc1cfadbe9a8397b1!Engenho%20Novo%2C%20Barueri%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1665928244731!5m2!1spt-BR!2sbr"
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade" class="mapa_oficina"></iframe>
+        </section>
+
+        <% if(oficinas_parceiras.length > 0) { %>
+            <hr id="linha_mobile">
+            <section id="oficinas_parceiras">
+                <h1 class="titulo">Oficinas Parceiras</h1>
+                <div id="tipos_oficinas">
+                    <div id="ofc_motos" class="tipos_ofc">
+                        <% for(let i = 0; i < oficinas_parceiras.length; i++) { %>
+                            <a href='/oficina/<%=oficinas_parceiras[i].nome_tela%>' class="espec_oficinas">
+                                <div>
+                                    <div class="content_oficinas">
+                                        <img src="data:image/gif;base64,<%= oficinas_parceiras[i].foto1 %>" alt="" class="foto-carousel">
+                                        <h5 class="nome_espec_oficina"><%= oficinas_parceiras[i].nome_oficina %></h5>
+                                        <p><%= oficinas_parceiras[i].descricao_ofc %></p>
+                                    </div>
+                                </div>
+                            </a>
+                        <% } %>
+                    </div>
+                </div>
+            </section>
+        <% } %>
+
+        <hr id="linha_mobile">
+
+        <section id="sec_avaliacao" class="pag1">
+            <h1 class="titulo">Avaliações</h1>
+            <div id="head_avaliacao">
+                <div id="nota">
+                    <div>
+                        <span><%= String(oficina[0].avg_media_geral).replace('.', ',') %></span>
+                        <div id="estrelas">
+                            <ul class="avaliacao_produtos">
+                                <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                <% if(oficina[0].avg_media_geral >= 2) { %>   
+                                    <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                <% } else { %>
+                                    <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                <% } %>
+                                <% if(oficina[0].avg_media_geral >= 3) { %>   
+                                    <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                <% } else { %>
+                                    <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                <% } %>
+                                <% if(oficina[0].avg_media_geral >= 4) { %>   
+                                    <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                <% } else { %>
+                                    <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                <% } %>
+                                <% if(oficina[0].avg_media_geral == 5) { %>   
+                                    <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                <% } else { %>
+                                    <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                    <span><%= oficina[0].num_avaliacoes %> Avaliações</span>
+                </div>
+            </div>
+            <% if(avaliacoes.length > 0) { %>
+                <div id="tipo_avaliacao">
+                    <div id="todas_av">
+                        <span>Todas</span>
+                    </div>
+                    <div id="positivas_av">
+                        <span>Positivas</span>
+                    </div>
+                    <div id="negativas_av">
+                        <span>Negativas</span>
+                    </div>
+                </div>
+            <% } %>
+
+            <div id="box_avaliacoes">
+                <% for(let i = 0; i < avaliacoes.length; i++) { %>
+                    <div class="sec-avalia">
+                        <span class="info-avalia"><%= avaliacoes[i].nome_avaliador %> avaliou <%= avaliacoes[i].nome_produto %></span>
+                        <div id="avaliacao">
+                            <img src="data:image/gif;base64,<%= avaliacoes[i].foto1 %>" alt="Imagem de avaliação" class="foto_avaliacao">
+                        <div class="infos_av">
+                            <p><%= avaliacoes[i].descricao_avalia %></p>
+                            <div class="estrelas_avaliacao">
+                                <ul class="avaliacao_produtos estrelas-box-avaliacao">
+                                    <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                    <% if(avaliacoes[i].avalia >= 2) { %>
+                                        <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                    <% } else { %>
+                                        <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                    <% } %>
+                                    <% if(avaliacoes[i].avalia >= 3) { %>
+                                        <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                    <% } else { %>
+                                        <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                    <% } %>
+                                    <% if(avaliacoes[i].avalia >= 4) { %>
+                                        <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                    <% } else { %>
+                                        <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                    <% } %>
+                                    <% if(avaliacoes[i].avalia >= 5) { %>
+                                        <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                    <% } else { %>
+                                        <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+
+            <div id="box_avaliacoes-pos">
+                <% for(let i = 0; i < avaliacoes.length; i++) { %>
+                    <% if(avaliacoes[i].avalia >= 3) { %>
+                        <div class="sec-avalia">
+                            <span class="info-avalia"><%= avaliacoes[i].nome_avaliador %> avaliou <%= avaliacoes[i].nome_produto %></span>
+                            <div id="avaliacao">
+                                <img src="data:image/gif;base64,<%= avaliacoes[i].foto1 %>" alt="Imagem de avaliação" class="foto_avaliacao">
+                            <div class="infos_av">
+                                <p><%= avaliacoes[i].descricao_avalia %></p>
+                                <div class="estrelas_avaliacao">
+                                    <ul class="avaliacao_produtos estrelas-box-avaliacao">
+                                        <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                        <% if(avaliacoes[i].avalia >= 2) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(avaliacoes[i].avalia >= 3) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(avaliacoes[i].avalia >= 4) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(avaliacoes[i].avalia >= 5) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+
+
+            <div id="box_avaliacoes-neg">
+                <% for(let i = 0; i < avaliacoes.length; i++) { %>
+                    <% if(avaliacoes[i].avalia < 3) { %>
+                        <div class="sec-avalia">
+                            <span class="info-avalia"><%= avaliacoes[i].nome_avaliador %> avaliou <%= avaliacoes[i].nome_produto %></span>
+                            <div id="avaliacao">
+                                <img src="data:image/gif;base64,<%= avaliacoes[i].foto1 %>" alt="Imagem de avaliação" class="foto_avaliacao">
+                            <div class="infos_av">
+                                <p><%= avaliacoes[i].descricao_avalia %></p>
+                                <div class="estrelas_avaliacao">
+                                    <ul class="avaliacao_produtos estrelas-box-avaliacao">
+                                        <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                        <% if(avaliacoes[i].avalia >= 2) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(avaliacoes[i].avalia >= 3) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(avaliacoes[i].avalia >= 4) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(avaliacoes[i].avalia >= 5) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+            <a href="https://web.whatsapp.com/send?phone=55<%=oficina[0].celular%>" target="_blank">
+                <button class="btn_fixed" id="cta_wpp" ><span>Entrar em contato via Whatsapp</span> <img src="/img/wpp_icon_branco.svg" alt=""></button>
+            </a>
+            <!-- <button class="btn_fixed" id="cta_wpp"><span>Entrar em contato via Whatsapp</span> <img src="/img/wpp_icon_branco.svg" alt=""></button> -->
+        </section>
+
+    </main>
+
+    <script src="/js/scriptAvaliacao.js"></script>
+
+    <%- include('../partial/footer.ejs') %>
+
+</body>
+
+</html>

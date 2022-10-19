@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Seus Serviços</title>
+
+    <!-- LINKS CSS -->
+    <!-- <link rel="stylesheet" href="css/styleavaliacao.css"> -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/styleHistorico.css">
+    <link rel="stylesheet" href="css/styleCadProduto.css">
+
+    <!-- LINKS PARA O GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- FONTS -->
+    <!-- GOTHIC-A1 -->
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+    <!-- SORA -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Sora:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- LINKS JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/script_menu.js"></script>
+    <script src="js/mask.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="js/categoria.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.btn').click(function () {
+                if (window.innerWidth < 756) {
+                    $('#pag_produtos').hide();
+                    $("#form_produto").show();
+                    $("#form_produto").css('position', 'relative');
+                    $('main').css('padding-bottom', '0')
+                }
+                else {
+                    $("#form_produto").show();
+                    $("#modal").show();
+                }
+            });
+            $('#close').click(function () {
+                if (window.innerWidth < 756) {
+                    $('#pag_produtos').show();
+                    $("#form_produto").hide();
+                    $("#form_produto").css('position', 'relative');
+                    $('main').css('padding-bottom', '42px')
+                }
+                else {
+                    $("#form_produto").hide();
+                    $("#modal").hide();
+                }
+            });
+            // $('#sub_form_produto').click(function () {
+            //     $('.pop-up').css('display', 'flex');
+            //     $('#modal').show();
+            // });
+            $('.delete-btn').click(function(){
+                $('.pop-up').css('display', 'flex');
+                $('#modal').show();
+            });
+            $('.segunda-opcao-btn').click(function(){
+                $('.pop-up').css('display', 'none');
+                $('#modal').hide();
+            });
+        })
+    </script>
+</head>
+
+<body>
+    <div id="modal"></div>
+
+    <%- include('../partial/header.ejs') %> 
+
+    <main>
+        <section id="pag_produtos">
+            <div class="titulo_arrow">
+                <img src="img/arrow_left.svg" alt="flecha virada para esquerda" onclick="window.history.back()">
+                <h1 class="titulo"> Seus Serviços </h1>
+            </div>
+
+            <% if(servicos.length == 0) { %>
+                <h3>Você Ainda não possui serviços cadastrados.</h3>
+            <% } else { %>
+                <div id="seus_produtos">
+                    <% for(let i = 0; i < servicos.length; i++) { %>
+                            <div class="box_produto">
+                                <div class="content">
+                        <a href="/servico/<%=servicos[i].id_produto%>">
+
+                                    <img class="produto" src="data:image/gif;base64,<%= servicos[i].foto1 %>" alt="">
+                                    <div class="infos_produto">
+                                        <h4 class="tinta"><%= servicos[i].nome_produto %></h4>
+                                        <h3 class="desc_oficina"><%= servicos[i].descricao_prod %></h3>
+                                        <h3 class="preco">R$<%= String(servicos[i].valor_produto).replace('.', ',') %></h3>
+                        </a>
+                                        
+                                        <div id="btns">
+                                            <button class="btn_box" id="Editar">Editar</button>
+                                            <button class="btn_box delete-btn" id="deletar">Deletar</button>
+                                            <div class="pop-up confirmacao">
+                                                <!-- <img src="img/img_pop-up.svg" alt=""> -->
+                                                <h3>Tem certeza que deseja excluir esse produto?</h3>
+                                    
+                                                <form action="/deletar/<%= servicos[i].id_produto %>" method="post"><button class="primeira-opcao-btn">Sim</button></form>
+                                                <button class="segunda-opcao-btn"><a href="#">Não</a></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    <% } %>
+                </div>
+            <% } %>
+        </section>
+        <button class="btn">Adicionar Serviço</button>
+
+        <!-- SECTION FORM PRODUTOS -->
+        <section id="form_produto">
+            <div class="titulo_arrow">
+                <img src="img/arrow_left.svg" alt="logo" id="close">
+                <h1 class="titulo">Cadastrar serviço</h1>
+            </div>
+
+            <div>
+                <form action="/cad_servico" enctype="multipart/form-data" method="post">
+                    <div class="row1">
+                        <div class="inputs-container">
+                            <div class="input-icon" id="email-icon"><img src="img/nome_produto_icon.svg" alt=""></div>
+                            <input id="nome_produto" name="nome_produto" class="inputs inputs_with_icon" placeholder="Nome do serviço"
+                                type="text">
+                        </div>
+
+                        <div class="inputs-container">
+                            <div class="input-icon" id="email-icon"><img src="img/dolar_icon.svg" alt=""></div>
+                            <input id="valor_produto" name="valor_produto" class="inputs inputs_with_icon" placeholder="Valor do serviço"
+                                type="text">
+                        </div>
+
+                        <div class="inputs-container">
+                            <div id="box-checkbox">
+                                <div class="line-checkbox">
+                                    <label for="carro">Carros</label>
+                                    <input type="checkbox" name="carro" id="carro">
+                            </div>
+                            <div class="line-checkbox">
+                                    <label for="moto">motos</label>
+                                    <input type="checkbox" name="moto" id="moto">
+                            </div>
+                            <div class="line-checkbox">
+                                    <label for="van">vans</label>
+                                    <input type="checkbox" name="van" id="van">
+                            </div>
+                            <div class="line-checkbox">
+                                    <label for="caminhão">caminhões</label>
+                                    <input type="checkbox" name="caminhao" id="caminhão">
+                            </div>
+                            <div class="line-checkbox">
+                                    <label for="bicicleta">bicicletas</label>
+                                    <input type="checkbox" name="bicicleta" id="bicicleta">
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row2">
+                        <div class="inputs-container">
+                            <div class="input-icon" id="email-icon"><img src="img/file_icon.svg" alt=""></div>
+                            <!-- <input id="desc_produto" class="inputs inputs_with_icon" placeholder="Descrição do serviço"
+                                type="text"> -->
+                            <textarea id="desc_produtos" class="inputs inputs_with_icon txt_area" cols="30"
+                                rows="10" placeholder="Características do produto" name="desc_produtos"></textarea>
+                        </div>
+                        <div class="inputs-container">
+                            <div class="input-icon" id="email-icon"><img src="img/file_icon.svg" alt=""></div>
+                            <!-- <input id="carac_produtos" class="inputs inputs_with_icon"
+                                placeholder="Características do serviço" type="text"> -->
+                            <textarea id="carac_produtos" class="inputs inputs_with_icon txt_area" cols="30"
+                                rows="10" placeholder="Características do produto" name="carac_produtos"></textarea>
+                        </div>
+                    </div>
+
+                    <div id="sec_fotos">
+                        <h2 class="titulo" id="fotos_title">Fotos do serviço</h2>
+                        <div id="box_preview_fotos"></div>
+                        <label for="add-img" id="addinput">Adicionar imagem</label>
+                        <input type="file" name="add-img" id="add-img" accept="image/
+                                    png, image/jpeg" multiple />
+                    </div>
+
+                    <button class="btn default_btn" id="sub_form_produto" type="submit"> <span>Continuar</span></button>
+
+                </form>
+
+            </div>
+
+            <!-- <div class="pop-up">
+                <img src="img/img_pop-up.svg" alt="">
+                <h3>Serviço Cadastrado!</h3>
+
+                <button class="primeira-opcao-btn"><a href="./pag_produto.html ">Ver Produto</a></button>
+                <button class="segunda-opcao-btn"><a href="./index.html">Concluir</a></button>
+            </div> -->
+        </section>
+
+    </main>
+    <script src="js/script_cad-produto.js"></script>
+
+    <script>
+        const textarea1 = document.querySelector("#desc_produtos");
+        const textarea2 = document.querySelector("#carac_produtos");
+        textarea1.addEventListener('keyup', e => {
+            textarea1.style.height = '46px'
+            let schHeight = e.target.scrollHeight;
+            textarea1.style.height = `${schHeight}px`
+        });
+        textarea2.addEventListener('keyup', e => {
+            textarea2.style.height = '46px'
+            let schHeight = e.target.scrollHeight;
+            textarea2.style.height = `${schHeight}px`
+        });
+    </script>
+
+</body>
+
+</html>

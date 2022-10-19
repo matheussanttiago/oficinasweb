@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Home</title>
+
+    <!-- LINKS CSS -->
+    <!-- <link rel="stylesheet" href="css/styleavaliacao.css"> -->
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/styleHome.css">
+    <link rel="stylesheet" href="/css/styleServicos.css">
+    <!-- CDN SLICK (CSS) -->
+    <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+    <!-- <link rel="stylesheet" type="text/css" href="js/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="js/slick/slick-theme.css"/> -->
+
+    <!-- LINKS PARA O GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- FONTS -->
+    <!-- GOTHIC-A1 -->
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+    <!-- SORA -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Sora:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- LINKS JS -->
+    <script src="https://kit.fontawesome.com/84b2985f50.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/scriptHome.js"></script>
+    <script src="js/script_menu.js"></script>
+    <script src="js/carousel.js"></script>
+    <!-- CDN SLICK (JS) -->
+    <!-- <script type="text/javascript" src="js/slick/slick.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <script src="/js/mask.js"></script>
+</head>
+
+<body>
+    <div id="modal"></div>
+
+    <%- include('../partial/header.ejs') %>
+
+    <main>
+        <section id="oficinas">
+            <div id="titulos-pesquisa">
+                <h1 class="titulo"> Melhores Avaliados </h1>
+                <div class="subtitulo">
+                    <img src="img/local_icon.svg" alt="Ícone do local">
+                    <span class="legenda"> Região de Barueri </span>
+                </div>
+            </div>
+            <div id="carrossel">
+                <% for (let i = 0; i < oficinas.length; i++) { %>
+                    <a href='oficina/<%=oficinas[i].nome_tela%>' class="carousel">
+                        <div class="carrossel_oficinas">
+                            <img src="data:image/gif;base64,<%= oficinas[i].foto1 %>" alt="imagem da oficina" class="img_ofc">
+                            <div class="modal_oficina"></div>
+                            <div class="carrossel_infos">
+                                <span class="nome_oficina"><%= oficinas[i].nome_oficina %></span>
+                                <span class="local_oficina"><%= oficinas[i].bairro %> - <%= oficinas[i].cidade %></span>
+                                <ul class="avaliacao_oficinas">
+                                    <li class="star-icon_oficinas ativo" data-avaliacao="1">
+                                        <img src="img/star_oficina_icon.svg" alt="">
+                                    </li>
+                                    <% if(oficinas[i].avg_media_geral >= 2) { %>
+                                        <li class="star-icon_oficinas ativo" data-avaliacao="1">
+                                            <img src="img/star_oficina_icon.svg" alt="">
+                                        </li>
+                                    <% } else { %>
+                                        <li class="star-icon_oficinas" data-avaliacao="5">
+                                            <img src="img/star_oficina_none.svg" alt="">
+                                        </li>
+                                    <% } %>
+                                    <% if(oficinas[i].avg_media_geral >= 3) { %>
+                                        <li class="star-icon_oficinas ativo" data-avaliacao="1">
+                                            <img src="img/star_oficina_icon.svg" alt="">
+                                        </li>
+                                    <% } else { %>
+                                        <li class="star-icon_oficinas" data-avaliacao="5">
+                                            <img src="img/star_oficina_none.svg" alt="">
+                                        </li>
+                                    <% } %>
+                                    <% if(oficinas[i].avg_media_geral >= 4) { %>
+                                        <li class="star-icon_oficinas ativo" data-avaliacao="1">
+                                            <img src="img/star_oficina_icon.svg" alt="">
+                                        </li>
+                                    <% } else { %>
+                                        <li class="star-icon_oficinas" data-avaliacao="5">
+                                            <img src="img/star_oficina_none.svg" alt="">
+                                        </li>
+                                    <% } %>
+                                    <% if(oficinas[i].avg_media_geral >= 5) { %>
+                                        <li class="star-icon_oficinas ativo" data-avaliacao="1">
+                                            <img src="img/star_oficina_icon.svg" alt="">
+                                        </li>
+                                    <% } else { %>
+                                        <li class="star-icon_oficinas" data-avaliacao="5">
+                                            <img src="img/star_oficina_none.svg" alt="">
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                    </a>
+                <% } %>
+            </div>
+        </section>
+
+        <nav class="nav_tipos-veiculos">
+            <div class="tipos_veiculos opacity_btn" id="tipo_moto">Motos</div>
+            <div class="tipos_veiculos opacity_btn" id="tipo_carro">Carros</div>
+            <div class="tipos_veiculos opacity_btn" id="tipo_van">Vans</div>
+            <div class="tipos_veiculos opacity_btn" id="tipo_bike">Bicicletas</div>
+            <div class="tipos_veiculos opacity_btn" id="tipo_caminhao">Caminhões</div>
+        </nav>
+
+        <section id="carousel_oficinas">
+
+            <div id="tipos_oficinas">
+                <div id="ofc_motos" class="tipos_ofc sec-motos">
+                    <% for(let i = 0; i < arrMotos.length; i++) { %>
+                        <a href="/oficina/<%= arrMotos[i].nome_tela%>" class="espec_oficinas">
+                            <div class="espec_oficinas">
+                                <div class="content_oficinas">
+                                    <img src="data:image/gif;base64,<%= arrMotos[i].foto1 %>" alt="" class="foto-ofc">
+                                    <h5 class="nome_espec_oficina"><%= arrMotos[i].nome_oficina %></h5>
+                                    <p><%= arrMotos[i].descricao_ofc %></p>
+                                </div>
+                            </div>
+                        </a>
+                    <% } %>
+                </div>
+                <div id="ofc_carros" class="tipos_ofc sec-carros">
+                    <% for(let i = 0; i < arrCarros.length; i++) { %>
+                        <a href="/oficina/<%= arrCarros[i].nome_tela%>" class="espec_oficinas">
+                            <div class="espec_oficinas">
+                                <div class="content_oficinas">
+                                    <img src="data:image/gif;base64,<%= arrCarros[i].foto1 %>" alt="" class="foto-ofc">
+                                    <h5 class="nome_espec_oficina"><%= arrCarros[i].nome_oficina %></h5>
+                                    <p><%= arrCarros[i].descricao_ofc %></p>
+                                </div>
+                            </div>
+                        </a>
+                    <% } %>
+                </div>
+                <div id="ofc_vans" class="tipos_ofc sec-vans">
+                    <% for(let i = 0; i < arrVans.length; i++) { %>
+                        <a href="/oficina/<%= arrVans[i].nome_tela%>" class="espec_oficinas">
+                            <div class="espec_oficinas">
+                                <div class="content_oficinas">
+                                    <img src="data:image/gif;base64,<%= arrVans[i].foto1 %>" alt="" class="foto-ofc">
+                                    <h5 class="nome_espec_oficina"><%= arrVans[i].nome_oficina %></h5>
+                                    <p><%= arrVans[i].descricao_ofc %></p>
+                                </div>
+                            </div>
+                        </a>
+                    <% } %>
+                </div>
+                <div id="ofc_caminhoes" class="tipos_ofc sec-caminhoes">
+                    <% for(let i = 0; i < arrCaminhoes.length; i++) { %>
+                        <a href="/oficina/<%= arrCaminhoes[i].nome_tela%>" class="espec_oficinas">
+                            <div class="espec_oficinas">
+                                <div class="content_oficinas">
+                                    <img src="data:image/gif;base64,<%= arrCaminhoes[i].foto1 %>" alt="" class="foto-ofc">
+                                    <h5 class="nome_espec_oficina"><%= arrCaminhoes[i].nome_oficina %></h5>
+                                    <p><%= arrCaminhoes[i].descricao_ofc %></p>
+                                </div>
+                            </div>
+                        </a>
+                    <% } %>
+                </div>
+                <div id="ofc_bikes" class="tipos_ofc sec-bicicletas">
+                    <% for(let i = 0; i < arrBicicletas.length; i++) { %>
+                        <a href="/oficina/<%= arrBicicletas[i].nome_tela%>" class="espec_oficinas">
+                            <div class="espec_oficinas">
+                                <div class="content_oficinas">
+                                    <img src="data:image/gif;base64,<%= arrBicicletas[i].foto1 %>" alt="" class="foto-ofc">
+                                    <h5 class="nome_espec_oficina"><%= arrBicicletas[i].nome_oficina %></h5>
+                                    <p><%= arrBicicletas[i].descricao_ofc %></p>
+                                </div>
+                            </div>
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+            <button class="shadow_btn" id="cta_oficinas"><a href="/oficinas">Ver mais oficinas</a></button>
+        </section>
+
+        <hr>
+
+        <section id="servicos">
+            <div id="titulos_servicos">
+                <div id="titulo_avaliacao">
+                    <h1 class="titulo"> Serviços </h1>
+                    <span class="legenda"> Melhores avaliados </span>
+                </div>
+                <button class="shadow_btn"><a href="/servicos">Ver mais</a></button>
+            </div>
+            <div id="box_servicos">
+                <% for(let i = 0;i < servicos.length; i++) { %>
+                    <% if(i <= 4) { %>
+                        <a href="servico/<%=servicos[i].id_produto%>">
+                            <div class="melhores-servicos">
+                                <img src="data:image/gif;base64,<%= servicos[i].foto1 %>" alt="Foto do serviço" id="foto-servico">
+                                <h5 class="titulos_servico"><%= servicos[i].nome_produto %></h5>
+                                <p class="desc_servico" id="desc_servico">
+                                    <%= servicos[i].descricao_prod %>
+                                </p>
+                                <button class="preco_servico default_btn">R$<%= String(servicos[i].valor_produto).replace('.', ',') %> </button>
+                                <img src="img/favorito_icon.svg" alt="Ícone de coração para favoritar serviço" id="favorito">
+                            </div>
+                        </a>
+                    <% } %>
+                <% } %>
+            </div>
+        </section>
+
+        <hr>
+
+        <section id="produtos">
+            <div id="titulos_produtos">
+                <div id="titulo_avaliacao">
+                    <h1 class="titulo"> Produtos </h1>
+                    <span class="legenda"> Mais vendidos </span>
+                </div>
+
+                <button class="shadow_btn"><a href="/produtos">Ver mais</a></button>
+            </div>
+            <div id="modal_destaques">
+                <div class="produtos_destaque">
+                    <% for(let i = 0; i < produtos.length; i++) {%>
+                        <% if(i <= 20) { %>
+                            <a href="produto/<%=produtos[i].id_produto%>">
+                                <div class="produto">
+                                    <div class="content_produtos">
+                                        <img src="data:image/gif;base64,<%= produtos[i].foto1 %>" alt="" class="img-prod">
+                                        <h5 class="titulo_produto"><%= produtos[i].nome_produto %></h5>
+                                        <span class="preco_produto">R$<%= String(produtos[i].valor_produto).replace('.', ',') %></span>
+                                        <div id="avaliacao_produto">
+                                            <ul class="avaliacao_produtos">
+                                                <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                                <% if(produtos[i].avaliacao >= 2) { %>   
+                                                    <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                                <% } else { %>
+                                                    <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                                <% } %>
+                                                <% if(produtos[i].avaliacao >= 3) { %>   
+                                                    <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                                <% } else { %>
+                                                    <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                                <% } %>
+                                                <% if(produtos[i].avaliacao >= 4) { %>   
+                                                    <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                                <% } else { %>
+                                                    <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                                <% } %>
+                                                <% if(produtos[i].avaliacao == 5) { %>   
+                                                    <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                                <% } else { %>
+                                                    <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                                <% } %>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        <% } %>
+                    <% } %>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <section id="ver_planos">
+            <img src="img/ilustracao_mecanico.svg" alt="Ilustração de um mecânico" id="ilustracao">
+            <div id="infos-planos">
+                <h3>Se junte a nós!</h3>
+                <span>Divulgue a sua oficina no melhor buscador de serviços mêcanicos do país.</span>
+                <!-- <div id="btn-plans"> -->
+                <button class="default_btn">
+                    <a href="login">Saiba Mais</a>
+                    <img src="img/avancar_icon.svg" alt="Flecha para a direita" id="avancar_icon">
+                </button>
+                <!-- </div> -->
+            </div>
+        </section>
+
+        <hr id="linha_mobile">
+
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+    <%- include('../partial/footer.ejs') %>
+
+</body>
+
+</html>

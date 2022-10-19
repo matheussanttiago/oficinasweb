@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Crie sua oficina</title>
+
+    <!-- LINKS CSS -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/styleCadOficina.css">
+
+    <!-- LINKS PARA O GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- FONTS -->
+    <!-- GOTHIC-A1 -->
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+    <!-- SORA -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Sora:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- LINKS JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/mask.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="js/script_menu.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".primeira-opcao-btn").click(function(){
+                $('.pop-up').css('display', 'none');
+                $('#modal-cad').hide();
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <% if(cadastrado == true) {%>
+        <div id="modal-cad"></div>
+    <% } %>
+
+    <%- include('../partial/normalHeader.ejs') %>
+
+    <%
+    var err_nome_oficina = {"erro":"","visu":"hide","msg":""}  
+    var err_nome_tela = {"erro":"","visu":"hide","msg":""}
+    var err_cnpj_oficina = {"erro":"","visu":"hide","msg":""}
+    var err_desc_oficina = {"erro":"","visu":"hide","msg":""} 
+    var err_cep = {"erro":"","visu":"hide","msg":""} 
+    var err_phone_oficina = {"erro":"","visu":"hide","msg":""} 
+
+if(erros) { 
+     
+     erros.errors.forEach(function(erro){
+         if (erro.param  == "nome_oficina"){ err_nome_oficina = {"erro":"erro","visu":"show","msg":erro.msg}}  
+         if (erro.param  == "nome_tela"){ err_nome_tela = {"erro":"erro","visu":"show","msg":erro.msg}}  
+         if (erro.param  == "cnpj_oficina"){ err_cnpj_oficina = {"erro":"erro","visu":"show","msg":erro.msg}} 
+         if (erro.param  == "desc_oficina"){ err_desc_oficina = {"erro":"erro","visu":"show","msg":erro.msg}}  
+         if (erro.param  == "cep"){ err_cep = {"erro":"erro","visu":"show","msg":erro.msg}}  
+         if (erro.param  == "phone_oficina"){ err_phone_oficina = {"erro":"erro","visu":"show","msg":erro.msg}}  
+     }); 
+ }; %>
+
+    <main>
+        <section class="cad_visitante">
+            <div class="titulo_arrow">
+                <img src="img/arrow_left.svg" alt="logo">
+                <h1 class="titulo">Criar sua oficina</h1>
+            </div>
+
+            <div>
+                <form action="cad_oficina" method="post" enctype="multipart/form-data">
+
+                    <div class="foto">
+                        <div id="inputs_foto">
+                            <div class="circle_foto">
+                                <img src="img/foto-padrao.svg" alt="" id="foto_padrao_perfil">
+                            </div>
+                            <!-- <div id="foto"></div> -->
+                            <label for="add-img-pp" id="add_foto_oficina"><img src="img/add-foto.svg" alt="logo"></label>
+                            <input type="file" name="add-img-pp" id="add-img-pp">
+                        </div>
+                    </div>
+
+                    <h2 class="titulo" id="fotos_title">Dados da oficina</h2>
+
+                    <!-- <div class="row"> -->
+                        <div class="inputs-container container2">
+                            <div class="input-icon" id="email-icon"><img src="img/nome_produto_icon.svg" alt=""></div>
+                            <input class="inputs inputs_with_icon <%= err_nome_oficina.erro %>" placeholder="Nome da oficina" type="text" name="nome_oficina" value="<%= valores.nome_oficina %>">
+                        </div>
+                        <span class="<%= err_nome_oficina.visu %>"><%= err_nome_oficina.msg %></span>
+
+                        <div class="inputs-container container2" id="nome_tela">
+                            <div class="input-icon" id="email-icon"><img src="img/nome_produto_icon.svg" alt=""></div>
+                            <input class="inputs inputs_with_icon <%= err_nome_tela.erro %>" placeholder="Nome de URL" type="text" name="nome_tela" value="<%= valores.nome_tela %>">
+                        </div>
+                        <span class="<%= err_nome_tela.visu %>"><%= err_nome_tela.msg %></span>
+
+
+                        <div class="inputs-container container2" id="cnpj">
+                            <div class="input-icon" id="email-icon"><img src="img/nome_produto_icon.svg" alt=""></div>
+                            <input class="inputs inputs_with_icon <%= err_cnpj_oficina.erro %>" id="cnpj_oficina" placeholder="CNPJ" type="text" name="cnpj_oficina" value="<%= valores.cnpj_oficina %>">
+                        </div>
+                        <span class="<%= err_cnpj_oficina.visu %>"><%= err_cnpj_oficina.msg %></span>
+
+                    <!-- </div> -->
+
+                    <!-- <div class="row"> -->
+                        <!-- <div class="inputs-container container2">
+                            <div class="input-icon" id="email-icon"><img src="img/file_icon.svg" alt=""></div>
+                            <input id="area_atuacao" class="inputs inputs_with_icon" placeholder="Área de atuação "
+                                type="text" name="area_atuacao">
+                        </div> -->
+                        <div class="inputs-container">
+                            <div id="box-checkbox">
+                                <div class="line-checkbox">
+                                    <label for="carro">Carros</label>
+                                    <input type="checkbox" name="carro" id="carro">
+                            </div>
+                            <div class="line-checkbox">
+                                    <label for="moto">motos</label>
+                                    <input type="checkbox" name="moto" id="moto">
+                            </div>
+                            <div class="line-checkbox">
+                                    <label for="van">vans</label>
+                                    <input type="checkbox" name="van" id="van">
+                            </div>
+                            <div class="line-checkbox">
+                                    <label for="caminhão">caminhões</label>
+                                    <input type="checkbox" name="caminhao" id="caminhão">
+                            </div>
+                            <div class="line-checkbox">
+                                    <label for="bicicleta">bicicletas</label>
+                                    <input type="checkbox" name="bicicleta" id="bicicleta">
+                            </div>
+                            <div class="line-checkbox">
+                                    <label for="todos">Todos</label>
+                                    <input type="checkbox" name="todos" id="todos">
+                            </div>
+                            </div>
+                        </div>
+                        <div class="inputs-container container2">
+                            <div class="input-icon" id="email-icon"><img src="img/file_icon.svg" alt=""></div>
+                            <!-- <input id="desc_produto" class="inputs inputs_with_icon" placeholder="Descrição da oficina"
+                                type="text"> -->
+                                <textarea name="desc_oficina" id="desc_produto" class="inputs inputs_with_icon txt_area <%= err_desc_oficina.erro %>" cols="30"
+                                rows="10" placeholder="Descrição da Oficina" value="<%= valores.desc_oficina %>"></textarea>
+                        </div>
+                        <span class="<%= err_desc_oficina.visu %>"><%= err_desc_oficina.msg %></span>
+
+                        <div class="inputs-container container2">
+                            <div class="input-icon" id="email-icon"><img src="img/clock_icon.svg" alt=""></div>
+                            <input id="carac_produtos" class="inputs inputs_with_icon"
+                                placeholder="Horário de funcionamento" type="text" name="horario_oficina">
+                        </div>
+                    <!-- </div> -->
+
+
+                    <h2 class="titulo" id="fotos_title">Localização</h2>
+                    <div class=" inputs-container">
+                        <div class="input-icon" id="email-icon"><img src="img/local_icon_cinza.svg" alt=""></div>
+                        <input id="cep" class="inputs inputs_with_icon" placeholder="CEP" type="text" name="cep" value="<%= valores.cep %>">
+                    </div>
+                    <span class="<%= err_cep.visu %>"><%= err_cep.msg %></span>
+
+                    <div id="box-inputs_end">
+                        <div id="inputs_end-box1">
+                            <input type="text" class="inputs_end" id="endereco" placeholder="Rua">
+                            <input type="text" class="inputs_end" id="numero" placeholder="Número" name="num_oficina">
+                        </div>
+                        <div id="inputs_end-box2">
+                            <input type="text" class="inputs_end" id="bairro" placeholder="Bairro">
+                            <input type="text" class="inputs_end" id="cidade" placeholder="Cidade">
+                            <input type="text" class="inputs_end" id="estado" placeholder="UF">
+                        </div>
+                    </div>
+
+                    <h2 class="titulo" id="fotos_title">Contato</h2>
+                    <!-- <div class="row"> -->
+                        <div class="inputs-container container2">
+                            <div class="input-icon" id="email-icon"><img src="img/wpp_icon_form.svg" alt=""></div>
+                            <input id="wpp" class="inputs inputs_with_icon phone-mask" placeholder="Celular (WhatsApp)"
+                                type="text" name="wpp_oficina">
+                        </div>
+
+                        <div class="inputs-container container2">
+                            <div class="input-icon" id="email-icon"><img src="img/phone_icon.svg" alt=""></div>
+                            <input id="telefone" class="inputs inputs_with_icon <%= err_phone_oficina.erro %>" placeholder="Telefone"
+                                type="text" name="phone_oficina" value="<%= valores.phone_oficina %>">
+                        </div>
+                        <span class="<%= err_phone_oficina.visu %>"><%= err_phone_oficina.msg %></span>
+
+                        <div class="inputs-container container2">
+                            <div class="input-icon" id="email-icon"><img src="img/email-icon.svg" alt=""></div>
+                            <input id="carac_produtos" class="inputs inputs_with_icon" placeholder="Email de contato"
+                                type="text" name="email_oficina">
+                        </div>
+                    <!-- </div> -->
+
+
+                    <h2 class="titulo" id="fotos_title">Redes Sociais</h2>
+                    <div class="row">
+                        <div class="inputs-container">
+                            <div class="input-icon" id="email-icon"><img src="img/link_icon.svg" alt=""></div>
+                            <input id="carac_produtos" class="inputs inputs_with_icon"
+                                placeholder="Link página do instagram" type="text" name="link_insta">
+                        </div>
+
+                        <div class="inputs-container">
+                            <div class="input-icon" id="email-icon"><img src="img/link_icon.svg" alt=""></div>
+                            <input id="carac_produtos" class="inputs inputs_with_icon"
+                                placeholder="Link página do facebook" type="text" name="link_face">
+                        </div>
+                    </div>
+
+
+
+
+                    <div id="sec_fotos">
+                        <h2 class="titulo" id="fotos_title">Fotos do serviço</h2>
+                        <div id="box_preview_fotos"></div>
+                        <label for="add-img" id="addinput">Adicionar imagem</label>
+                        <input type="file" name="add_img" id="add-img" accept="image/
+                        png, image/jpeg" multiple />
+                    </div>
+                    <button class="btn default_btn" type="submit" id="finish"> <span>Continuar</span> </button>
+
+                </form>
+            </div>
+        </section>
+
+        <% if(cadastrado == true) {%>
+            <div class="pop-up">
+                <img src="img/img_pop-up.svg" alt="">
+                <h3>Concluido!</h3>
+    
+                <p>Deseja criar o perfil da sua oficina?</p>
+    
+                <button class="primeira-opcao-btn">Criar Oficina</button>
+                <button class="segunda-opcao-btn"><a href="/">Depois</a></button>
+            </div>
+        <% } %>
+    </main>
+
+    <script src="js/script_cad_oficina.js"></script>
+    <script>
+        const textarea1 = document.querySelector("#desc_produto");
+        textarea1.addEventListener('keyup', e => {
+            textarea1.style.height = '46px'
+            let schHeight = e.target.scrollHeight;
+            textarea1.style.height = `${schHeight}px`
+        });
+    </script>
+
+</body>
+
+</html>

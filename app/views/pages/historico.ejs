@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Histórico</title>
+
+    <!-- LINKS CSS -->
+    <!-- <link rel="stylesheet" href="css/styleavaliacao.css"> -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/styleHistorico.css">
+
+    <!-- LINKS PARA O GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- FONTS -->
+    <!-- GOTHIC-A1 -->
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+    <!-- SORA -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Sora:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- LINKS JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/script_menu.js"></script>
+</head>
+
+<body>
+    <div id="modal"></div>
+
+    <%- include('../partial/header.ejs') %>
+
+    <main>
+        <section>
+
+            <h1 class="titulo"> Histórico </h1>
+            <span class="legenda">Ultimos Avaliados</span>
+
+            <div id="seus_produtos">
+                <% if(resultsProd.length > 0) { %>
+                    <% for(let i = 0; i < resultsProd.length; i++) { %>
+                        <% if(resultsProd[i].info_produto.tipo_do_produto == 1) { %>
+                            <a href="/produto/<%= resultsProd[i].info_produto.id_produto %>">
+                        <% } else { %>
+                            <a href="/servico/<%= resultsProd[i].info_produto.id_produto %>">
+                        <% } %>
+                            <div class="box_produto">
+                                <div class="content">
+                                    <img class="produto" src="data:image/gif;base64,<%= resultsProd[i].info_produto.foto1 %>" alt="">
+                                    <div class="infos_produto">
+                                        <% if(resultsProd[i].info_produto.tipo_do_produto == 1) { %>
+                                            <span class="tipo_produto">Produto</span>
+                                        <% } else { %>
+                                            <span class="tipo_produto">Serviço</span>
+                                        <% } %>
+                                        <br>
+                                        <span class="tinta nome_prod"><%= resultsProd[i].info_produto.nome_produto %></span>
+                                        <h4 class="tipo_produto"><%= resultsProd[i].info_produto.descricao_prod %></h4> <br>
+                                        <h3 class="preco">R$999,99</h3>
+                                        <div id="notas">
+                                            <div>
+                                                <img src="img/star.svg" alt="" class="star-icon">
+                                                <span class="nota"><%= String(resultsProd[i].info_produto.media_avaliacao).replace('.', ',') %></span>
+                                                <spaan class="num_avaliacao">(<%= resultsProd[i].info_produto.num_avaliacoes %> avaliações)</spaan>
+                                            </div>
+                                            <img src="img/favorito_icon.svg" alt="" class="fav_icon">
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                                <div class="sua-avaliacao">
+                                    <span>Sua avaliação:</span>
+                                    <div class="box-avaliacao">
+                                        <p><%= resultsProd[i].descricao_avalia %></p>
+                                    <ul class="avaliacao_produtos">
+                                        <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                        <% if(resultsProd[i].avalia >= 2) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(resultsProd[i].avalia >= 3) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(resultsProd[i].avalia >= 4) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(resultsProd[i].avalia == 5) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                    </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    <% } %>
+                <% } else { %>
+                    <div class="box-zero-avaliacoes">
+                        <span class="zero-avaliacoes">Você ainda não avaliou nenhum produto!</span>
+                    </div>
+                <% } %>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+
+</html>

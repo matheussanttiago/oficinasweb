@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Produtos da oficina</title>
+
+    <!-- LINKS CSS -->
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/styletodosprodutos.css">
+
+    <!-- LINKS PARA O GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- FONTS -->
+    <!-- GOTHIC-A1 -->
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+    <!-- SORA -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Sora:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- LINKS JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/script_menu.js"></script>
+    <script src="/js/scriptHome.js"></script>
+    <script src="/js/categoria.js"></script>
+</head>
+
+<body>
+    <div id="modal"></div>
+
+    <%- include('../partial/header.ejs') %>
+
+    <main>
+        <section>
+            <div>
+
+                <div id="titulos">
+                    <% if(oficina[0].foto_perfil_ofc == null) { %>
+                        <div class="foto_oficina">
+                            <img src="/img/foto-padrao-oficina.svg" class="img-foto_oficina">
+                        </div>
+                    <% } else { %>
+                        <div class="foto_oficina">
+                            <img src="data:image/gif;base64,<%= oficina[0].foto_perfil_ofc %>" alt="foto de perfil da oficina" class="img-foto_oficina">
+                        </div>
+                    <% } %>
+                    <div>
+                        <h1 class="titulo"><%= oficina[0].nome_oficina %></h1>
+                        <h2 class="legenda">Produtos</h2>
+                    </div>
+                </div>
+
+                <nav class="nav_tipos_veiculos">
+                    <div class="tipos_veiculos opacity_btn" id="tipo_todos">Todos</div>
+                    <div class="tipos_veiculos opacity_btn" id="tipo_moto">Motos</div>
+                    <div class="tipos_veiculos opacity_btn" id="tipo_carro">Carros</div>
+                    <div class="tipos_veiculos opacity_btn" id="tipo_van">Vans</div>
+                    <div class="tipos_veiculos opacity_btn" id="tipo_bike">Bicicletas</div>
+                    <div class="tipos_veiculos opacity_btn" id="tipo_caminhao">Caminhões</div>
+                </nav>
+
+                <div class="produtos_destaque">
+
+                    <% for(let i=0; i < produtos.length; i++) {%>
+                        <a href="/produto/<%=produtos[i].id_produto%>" class="produto sec-todos">
+                            <div>
+                                <img src="data:image/gif;base64,<%= produtos[i].foto1 %>" alt="Imagem do produto" class="img_produto">
+                                <span class="preco_produto">R$<%= String(produtos[i].valor_produto).replace('.', ',') %></span>
+                                <h5 class="titulo_produto"><%= produtos[i].nome_produto %></h5>
+                                <div id="avaliacao_produto">
+                                    <ul class="avaliacao_produtos">
+                                        <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                        <% if(produtos[i].media_avaliacao >= 2) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(produtos[i].media_avaliacao >= 3) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(produtos[i].media_avaliacao >= 4) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(produtos[i].media_avaliacao == 5) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </a>
+                    <% } %>
+
+                    <% for(let i=0; i < arrMotos.length; i++) {%>
+                        <a href="/produto/<%=arrMotos[i].id_produto%>" class="produto sec-motos">
+                            <div>
+                                <img src="data:image/gif;base64,<%= arrMotos[i].foto1 %>" alt="Imagem do produto" class="img_produto">
+                                <span class="preco_produto">R$<%= String(arrMotos[i].valor_produto).replace('.', ',') %></span>
+                                <h5 class="titulo_produto"><%= arrMotos[i].nome_produto %></h5>
+                                <div id="avaliacao_produto">
+                                    <ul class="avaliacao_produtos">
+                                        <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                        <% if(arrMotos[i].media_avaliacao >= 2) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrMotos[i].media_avaliacao >= 3) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrMotos[i].media_avaliacao >= 4) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrMotos[i].media_avaliacao == 5) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </a>
+                    <% } %>
+
+                    <% for(let i=0; i < arrCarros.length; i++) {%>
+                        <a href="/produto/<%=arrCarros[i].id_produto%>" class="produto sec-carros">
+                            <div>
+                                <img src="data:image/gif;base64,<%= arrCarros[i].foto1 %>" alt="Imagem do produto" class="img_produto">
+                                <span class="preco_produto">R$<%= String(arrCarros[i].valor_produto).replace('.', ',') %></span>
+                                <h5 class="titulo_produto"><%= arrCarros[i].nome_produto %></h5>
+                                <div id="avaliacao_produto">
+                                    <ul class="avaliacao_produtos">
+                                        <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                        <% if(arrCarros[i].media_avaliacao >= 2) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrCarros[i].media_avaliacao >= 3) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrCarros[i].media_avaliacao >= 4) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrCarros[i].media_avaliacao == 5) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </a>
+                    <% } %>
+                    
+                    <% for(let i=0; i < arrVans.length; i++) {%>
+                        <a href="/produto/<%=arrVans[i].id_produto%>" class="produto sec-vans">
+                            <div>
+                                <img src="data:image/gif;base64,<%= arrVans[i].foto1 %>" alt="Imagem do produto" class="img_produto">
+                                <span class="preco_produto">R$<%= String(arrVans[i].valor_produto).replace('.', ',') %></span>
+                                <h5 class="titulo_produto"><%= arrVans[i].nome_produto %></h5>
+                                <div id="avaliacao_produto">
+                                    <ul class="avaliacao_produtos">
+                                        <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                        <% if(arrVans[i].media_avaliacao >= 2) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrVans[i].media_avaliacao >= 3) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrVans[i].media_avaliacao >= 4) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrVans[i].media_avaliacao == 5) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </a>
+                    <% } %>
+
+                    <% for(let i=0; i < arrCaminhoes.length; i++) {%>
+                        <a href="/produto/<%=arrCaminhoes[i].id_produto%>" class="produto sec-caminhoes">
+                            <div>
+                                <img src="data:image/gif;base64,<%= arrCaminhoes[i].foto1 %>" alt="Imagem do produto" class="img_produto">
+                                <span class="preco_produto">R$<%= String(arrCaminhoes[i].valor_produto).replace('.', ',') %></span>
+                                <h5 class="titulo_produto"><%= arrCaminhoes[i].nome_produto %></h5>
+                                <div id="avaliacao_produto">
+                                    <ul class="avaliacao_produtos">
+                                        <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                        <% if(arrCaminhoes[i].media_avaliacao >= 2) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrCaminhoes[i].media_avaliacao >= 3) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrCaminhoes[i].media_avaliacao >= 4) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrCaminhoes[i].media_avaliacao == 5) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </a>
+                    <% } %>
+                    <% for(let i=0; i < arrBicicletas.length; i++) {%>
+                        <a href="/produto/<%=arrBicicletas[i].id_produto%>" class="produto sec-bicicletas">
+                            <div>
+                                <img src="data:image/gif;base64,<%= arrBicicletas[i].foto1 %>" alt="Imagem do produto" class="img_produto">
+                                <span class="preco_produto">R$<%= String(arrBicicletas[i].valor_produto).replace('.', ',') %></span>
+                                <h5 class="titulo_produto"><%= arrBicicletas[i].nome_produto %></h5>
+                                <div id="avaliacao_produto">
+                                    <ul class="avaliacao_produtos">
+                                        <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                        <% if(arrBicicletas[i].media_avaliacao >= 2) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrBicicletas[i].media_avaliacao >= 3) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrBicicletas[i].media_avaliacao >= 4) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(arrBicicletas[i].media_avaliacao == 5) { %>   
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </a>
+                    <% } %>
+                </div>
+
+
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

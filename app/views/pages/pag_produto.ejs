@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title><%= produto[0].nome_produto %></title>
+
+    <!-- LINKS CSS -->
+    <link rel="stylesheet" href="/css/styleavaliacao.css">
+    <link rel="stylesheet" href="/css/default.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/styleOficina.css">
+    <link rel="stylesheet" href="/css/styleServicos.css">
+
+    <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+
+    <!-- LINKS PARA O GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- FONTS -->
+    <!-- GOTHIC-A1 -->
+    <link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+    <!-- SORA -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Sora:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- FONT AWESOME PARA ÍCONES -->
+    <script src="https://kit.fontawesome.com/84b2985f50.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/script_oficina.js"></script>
+    <script src="/js/script_menu.js"></script>
+    <script src="/js/carousel.js"></script>
+    <link rel="stylesheet" href="css/styleavaliacao.css">
+        <!-- <script type="text/javascript" src="js/slick/slick.min.js"></script> -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
+        <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#cta_avaliar').click(function () {
+                if (window.innerWidth > 480) {
+                    $('#pop-up_avaliacao').slideToggle();
+                    $('#pop-up_avaliacao').css('display', 'flex');
+                    $('#modal').show();
+                    $('body').css('overflow', 'hidden');
+                } else {
+                    $('.pag1').hide();
+                    $('#pop-up_avaliacao').css('display', 'flex');
+                    $('#pop-up_avaliacao').css('position', 'relative');
+                }
+            })
+            $('#close').click(function () {
+                if (window.innerWidth > 480) {
+                    $('#pop-up_avaliacao').slideToggle();
+                    $('#pop-up_avaliacao').css('display', 'none');
+                    $('#modal').toggle();
+                    $('body').css('overflow', 'auto');
+                } else {
+                    $('.pag1').show();
+                    $('#pop-up_avaliacao').css('display', 'none');
+                }
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div id="modal"></div>
+
+    <%- include('../partial/header.ejs') %>
+
+    <main>
+
+        <section id="sec_titulos" class="pag1">
+            <div id="titulos">
+                <div>
+                    <h1 class="titulo"><%= produto[0].nome_produto %></h1>
+                    <h2 class="legenda">Por <span class="nome-oficina"><%= dadosAnunciante[0].nome_oficina %></span></h2>
+                </div>
+            </div>
+            <div class="nota_titulo">
+                <div id="estrelas">
+                    <ul class="avaliacao_produtos">
+                        <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                        <% if(media_avaliacao >= 2) { %>   
+                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                        <% } else { %>
+                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                        <% } %>
+                        <% if(media_avaliacao >= 3) { %>   
+                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                        <% } else { %>
+                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                        <% } %>
+                        <% if(media_avaliacao >= 4) { %>   
+                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                        <% } else { %>
+                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                        <% } %>
+                        <% if(media_avaliacao == 5) { %>   
+                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                        <% } else { %>
+                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                        <% } %>
+                    </ul>
+                </div>
+                <span><%= num_avaliacoes %> Avaliações</span>
+            </div>
+            </div>
+        </section>
+
+        <!-- <div id="pag1"> -->
+        <section id="oficinas" class="pag1">
+            <div id="carrossel">
+                <% if(produto[0].foto1 != null) { %>
+                    <div class="carrossel_oficinas">
+                        <img src="data:image/gif;base64,<%= produto[0].foto1 %>" alt="imagem da oficina" class="img_ofc">
+                    </div>
+                <% } %>
+                <% if(produto[0].foto2 != null) { %>
+                    <div class="carrossel_oficinas">
+                        <img src="data:image/gif;base64,<%= produto[0].foto2 %>" alt="imagem da oficina" class="img_ofc">
+                    </div>
+                <% } %>
+                <% if(produto[0].foto3 != null) { %>
+                    <div class="carrossel_oficinas">
+                        <img src="data:image/gif;base64,<%= produto[0].foto3 %>" alt="imagem da oficina" class="img_ofc">
+                    </div>
+                <% } %>
+                <% if(produto[0].foto4 != null) { %>
+                    <div class="carrossel_oficinas">
+                        <img src="data:image/gif;base64,<%= produto[0].foto4 %>" alt="imagem da oficina" class="img_ofc">
+                    </div>
+                <% } %>
+                <% if(produto[0].foto5 != null) { %>
+                    <div class="carrossel_oficinas">
+                        <img src="data:image/gif;base64,<%= produto[0].foto5 %>" alt="imagem da oficina" class="img_ofc">
+                    </div>
+                <% } %>
+                <% if(produto[0].foto6 != null) { %>
+                    <div class="carrossel_oficinas">
+                        <img src="data:image/gif;base64,<%= produto[0].foto6 %>" alt="imagem da oficina" class="img_ofc">
+                    </div>
+                <% } %>
+            </div>
+        </section>
+
+        <section class="pag1">
+            <div class="titulo">R$<%= String(produto[0].valor_produto).replace('.', ',') %></div>
+            <!-- <span class="legenda">Reparo feito somente na oficina</span> -->
+
+            <div id="acoes">
+                <div>
+                    <img src="/img/favorito_laranja.svg" alt="Ícone de coração">
+                    Adicionar aos favoritos
+                </div>
+                <div>
+                    <img src="/img/compartilhar_icon.svg" alt="Ícone de compartilhamento">
+                    Compartihar
+                </div>
+            </div>
+
+            <div class="titulo" id="carac">Características</div>
+            <p><%= produto[0].caracteristicas %></p>
+        </section>
+
+        <hr class="pag1">
+
+        <section class="pag1">
+            <div id="infos_oficina">
+
+                <h1 class="titulo" id="desc">Descrição</h1>
+                <p><%= produto[0].descricao_prod %></p>
+
+                <a href="https://web.whatsapp.com/send?phone=55<%=dadosAnunciante[0].celular%>" target="_blank">
+                    <button class="btn_laranja" id="cta_wpp_pag_laranja"><span>Entrar em contato via Whatsapp</span> <img
+                        src="/img/wpp_icon_branco.svg" alt=""></button>
+                </a>
+                
+
+            </div>
+        </section>
+
+        <hr class="pag1">
+
+        <section id="anunciante" class="pag1">
+            <div class="titulo" id="titulo-anunciante">Anunciante</div>
+            <div id="titulos">
+                <% if(dadosAnunciante[0].foto_perfil_ofc == null) { %>
+                    <div class="foto_oficina">
+                        <img src="/img/foto-padrao-oficina.svg" class="foto-perfil-oficina">
+                    </div>
+                <% } else { %>
+                    <div class="foto_oficina">
+                        <img src="data:image/gif;base64,<%= dadosAnunciante[0].foto_perfil_ofc %>" alt="" class="foto-perfil-oficina">
+                    </div>
+                <% } %>
+                <a href='/oficina/<%=dadosAnunciante[0].nome_tela%>'>
+                    <div class="box-anunciante">
+                        <h1 class="titulo" id="nome_oficina"><%= dadosAnunciante[0].nome_oficina %></h1>
+                        <h2 class="legenda"><%= dadosAnunciante[0].descricao_ofc %></h2>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <hr class="pag1">
+
+        <section id="localizacao" class="pag1">
+            <h1 class="titulo">Localização</h1>
+            <address>
+                <span>Estr. Velha de Itapevi, 4436 - Vila Milittar, Barueri - SP, 06444-400</span>
+            </address>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3102.582997295343!2d-70.25502298486697!3d-33.35632110007344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x967d30bcd3681737%3A0x9d9ff971201d1657!2sValle%20Nevado%20Ski%20Resort!5e1!3m2!1spt-BR!2sbr!4v1618333426246!5m2!1spt-BR!2sbr"
+                allowfullscreen="" loading="lazy" class="mapa_oficina"></iframe>
+        </section>
+
+        <hr id="linha_mobile" class="pag1">
+
+        <section id="sec_avaliacao" class="pag1">
+            <h1 class="titulo">Avaliações</h1>
+            <div id="head_avaliacao">
+                <div id="nota">
+                    <div>
+                        <span><%= String(media_avaliacao).replace('.', ',') %></span>
+                        <div id="estrelas">
+                            <ul class="avaliacao_produtos">
+                                <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                <% if(media_avaliacao >= 2) { %>   
+                                    <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                <% } else { %>
+                                    <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                <% } %>
+                                <% if(media_avaliacao >= 3) { %>   
+                                    <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                <% } else { %>
+                                    <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                <% } %>
+                                <% if(media_avaliacao >= 4) { %>   
+                                    <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                <% } else { %>
+                                    <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                <% } %>
+                                <% if(media_avaliacao == 5) { %>   
+                                    <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                <% } else { %>
+                                    <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                    <span><%= num_avaliacoes %> Avaliações</span>
+                </div>
+            </div>
+            <% if(avaliacoes.length > 0) { %>
+                <div id="tipo_avaliacao">
+                    <div id="todas_av">
+                        <span>Todas</span>
+                    </div>
+                    <div id="positivas_av">
+                        <span>Positivas</span>
+                    </div>
+                    <div id="negativas_av">
+                        <span>Negativas</span>
+                    </div>
+                </div>
+            <% } %>
+
+            <div id="box_avaliacoes">
+                <% for(let i = 0; i < avaliacoes.length; i++) { %>
+                    <div id="avaliacao">
+                        <img src="data:image/gif;base64,<%= avaliacoes[i].foto1 %>" alt="Imagem de avaliação" class="foto_avaliacao">
+                        <div class="infos_av">
+                            <span><%= avaliacoes[i].nome_avaliador %></span>
+                            <p><%= avaliacoes[i].descricao_avalia %></p>
+                            <div id="estrelas_avaliacao">
+                                <ul class="avaliacao_produtos">
+                                    <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                    <% if(avaliacoes[i].avalia >= 2) { %>
+                                        <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                    <% } else { %>
+                                        <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                    <% } %>
+                                    <% if(avaliacoes[i].avalia >= 3) { %>
+                                        <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                    <% } else { %>
+                                        <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                    <% } %>
+                                    <% if(avaliacoes[i].avalia >= 4) { %>
+                                        <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                    <% } else { %>
+                                        <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                    <% } %>
+                                    <% if(avaliacoes[i].avalia >= 5) { %>
+                                        <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                    <% } else { %>
+                                        <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+
+            <div id="box_avaliacoes-pos">
+                <% for(let i = 0; i < avaliacoes.length; i++) { %>
+                    <% if(avaliacoes[i].avalia >= 3) { %>
+                        <div id="avaliacao">
+                            <img src="data:image/gif;base64,<%= avaliacoes[i].foto1 %>" alt="Imagem de avaliação" class="foto_avaliacao">
+                            <div class="infos_av">
+                                <span><%= avaliacoes[i].nome_avaliador %></span>
+                                <p><%= avaliacoes[i].descricao_avalia %></p>
+                                <div id="estrelas_avaliacao">
+                                    <ul class="avaliacao_produtos">
+                                        <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                        <% if(avaliacoes[i].avalia >= 2) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(avaliacoes[i].avalia >= 3) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(avaliacoes[i].avalia >= 4) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(avaliacoes[i].avalia >= 5) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+
+
+            <div id="box_avaliacoes-neg">
+                <% for(let i = 0; i < avaliacoes.length; i++) { %>
+                    <% if(avaliacoes[i].avalia <= 3) { %>
+                        <div id="avaliacao">
+                            <img src="data:image/gif;base64,<%= avaliacoes[i].foto1 %>" alt="Imagem de avaliação" class="foto_avaliacao">
+                            <div class="infos_av">
+                                <span><%= avaliacoes[i].nome_avaliador %></span>
+                                <p><%= avaliacoes[i].descricao_avalia %></p>
+                                <div id="estrelas_avaliacao">
+                                    <ul class="avaliacao_produtos">
+                                        <li class="star-icon_produtos ativo" data-avaliacao="1"><img src="/img/star.svg" alt=""></li>
+                                        <% if(avaliacoes[i].avalia >= 2) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(avaliacoes[i].avalia >= 3) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(avaliacoes[i].avalia >= 4) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                        <% if(avaliacoes[i].avalia >= 5) { %>
+                                            <li class="star-icon_produtos" data-avaliacao="2"><img src="/img/star.svg" alt=""></li>
+                                        <% } else { %>
+                                            <li class="star-icon_produtos" data-avaliacao="5"><img src="/img/star_none.svg" alt=""></li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+
+            <% if(autenticado && tipo_usuario == 1) { %>
+                <button class="btn_laranja" id="cta_avaliar"><span><a href="#">Avaliar</a></span></button>
+            <%  } %>
+        </section>
+        <!-- </div> -->
+
+        <section id="pop-up_avaliacao">
+            <div>
+                <div class="titulo_arrow">
+                    <img src="/img/arrow_left.svg" alt="flecha virada para esquerda" onclick="window.history.back()"
+                        id="close">
+                    <h1 class="titulo" id="tittle_avaliacao"> Avalie seu produto </h1>
+                </div>
+                <span class="legenda"> <%= produto[0].nome_produto %> - <%= dadosAnunciante[0].nome_oficina %> </span>
+
+               <form action="/avaliacao/<%= produto[0].id_produto %>" enctype="multipart/form-data" method="post">
+                <div id="quadrado">
+                    <label for="add-img" id="addinput">Adicionar imagem</label>
+                    <input type="file" name="add-img" id="add-img">
+                    <img src="" alt="" id="teste">
+                </div>
+
+                <span class="titulo"> O que vc achou do produto? </span>
+
+
+                <span class="legenda"> Escolha de 1 a 5 estrelas para avaliar</span>
+                <ul class="avaliacao">
+                    <li class="star-icon ativo" data-avaliacao="1"></li>
+                    <li class="star-icon" data-avaliacao="2"></li>
+                    <li class="star-icon" data-avaliacao="3"></li>
+                    <li class="star-icon" data-avaliacao="4"></li>
+                    <li class="star-icon" data-avaliacao="5"></li>
+                </ul>
+                <input type="text" name="num_estrela" id="num_estrela">
+
+                <div id="comentario">
+                    <img class="comente" src="/img/Comentario.svg">
+                    <span class="titulo" id="Deixar">Deixar comentario</span>
+                    <span id="limite-crt" class="legenda"></span>
+                </div>
+
+                <textarea name="comentario" id="comentar" cols="30" rows="10"
+                    placeholder="Conte-nos o que aconteceu (opicional)" onclick="contaCaracteres(this)"
+                    onkeydown="contaCaracteres(this)" onkeyup="contaCaracteres(this)"></textarea>
+
+                <button class="concluir default_btn" id="concluir" type="submit"><span>Concluir</span></button>
+               </form>
+            </div>
+        </section>
+
+    </main>
+
+
+    <script src="/js/scriptAvaliacao.js"></script>
+
+</body>
+
+</html>
