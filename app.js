@@ -61,9 +61,11 @@ app.use(oficinas);
 app.use('/', home);
 
 
-app.listen(port, () => {
-    console.log(`Servidor ouvindo na porta: ${port}`)
-});
+// app.listen(port, () => {
+//     console.log(`Servidor ouvindo na porta: ${port}`)
+// });
+
+app.listen(process.env.PORT || 3000)
 
 
 module.exports = app;
