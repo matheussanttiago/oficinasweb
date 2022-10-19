@@ -30,10 +30,10 @@ const mysql = require('mysql2')
 
 module.exports = function(){
     return mysql.createConnection({
-       host: "localhost",
-       user: "root",
-       password: "M@211004@s", // senha na escola @ITB123456
-       database: "oficinas_web",
-       port: 3306
+       host: "ec2-44-207-253-50.compute-1.amazonaws.com",
+       user: "ibqljhqkgxlebh",
+       password: "ff12a476c7680ef2e4dbacb4412659549e328614d4062c1e8cdf6c95f3f62189", // senha na escola @ITB123456
+       database: "dbitjnfqoh11ht",
+       port: 5432
      });
 }
